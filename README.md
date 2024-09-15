@@ -15,9 +15,9 @@ A single codebase should be used, with version control, for each microservice.
 
 1. **Create a separate GitHub repository** under your GitHub account for each service.
    - For example, create three repositories:
-      - `order-service-repo`
-      - `product-service-repo`
-      - `store-front-repo`
+      - `order-service`
+      - `product-service`
+      - `store-front`
 2. **Copy the content** for each service from the existing codebase on [Algonquin Pet Store](https://github.com/ramymohamed10/algonquin-pet-store).
    - The `order-service` code is found in the `order-service` directory.
    - The `product-service` code is found in the `product-service` directory.
@@ -109,50 +109,50 @@ Extract any hard-coded configuration from the code (such as database URLs, Rabbi
    - Once the `.env` file is set up and the `dotenv` crate is added, run `cargo build` to install the dependencies and restart your **product-service**. Test it to ensure it is correctly using the environment variables.
 
 3. **store-front**
-- Configure the **store-front** to use environment variables instead of hard-coded values.
-- You have been provided with an updated [**`src`**](store-front-algonquin-pet-store/src) folder that you should use to replace the **`src`** folder of your **store-front** Vue.js application in your repository. This updated folder will include code that utilizes environment variables instead of hard-coded values.
+   - Configure the **store-front** to use environment variables instead of hard-coded values.
+   - You have been provided with an updated [**`src`**](store-front-algonquin-pet-store/src) folder that you should use to replace the **`src`** folder of your **store-front** Vue.js application in your repository. This updated folder will include code that utilizes environment variables instead of hard-coded values.
 
-- In a Vue.js application, you can use `.env` files to store environment-specific configurations. Vue.js requires environment variable names to start with `VUE_APP_`.
-- Create a `.env` file in the root directory of your **store-front** application. This file will store all environment-specific configurations, such as API URLs for the order-service and product-service. The `.env` file should not be included in version control (Git), so make sure you add it to `.gitignore`.
-- Here’s what the content of your `.env` file should look like:
-   ```bash
-   # API URL for the order-service
-   VUE_APP_ORDER_SERVICE_URL=http://localhost:3000
-
-   # API URL for the product-service
-   VUE_APP_PRODUCT_SERVICE_URL=http://localhost:3030
-   ```
-
-   - `VUE_APP_ORDER_SERVICE_URL`: Replace this with the correct URL for your **order-service** (e.g., your deployed service URL in development).
-   - `VUE_APP_PRODUCT_SERVICE_URL`: Replace this with the correct URL for your **product-service** (e.g., your deployed service URL in development).
-   - In your Vue.js application code, use `process.env` to access these environment variables. For example:
-      ```javascript
-      const orderServiceUrl = process.env.VUE_APP_ORDER_SERVICE_URL;
-      const productServiceUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL;
-      ```
-   - Once the `.env` file is set up, run your development server to ensure it is correctly using the environment variables:
+   - In a Vue.js application, you can use `.env` files to store environment-specific configurations. Vue.js requires environment variable names to start with `VUE_APP_`.
+   - Create a `.env` file in the root directory of your **store-front** application. This file will store all environment-specific configurations, such as API URLs for the order-service and product-service. The `.env` file should not be included in version control (Git), so make sure you add it to `.gitignore`.
+   - Here’s what the content of your `.env` file should look like:
       ```bash
-      npm run serve
-      ```
-   - To use environment variables in production, you can create a `.env.production` file with production-specific values, like this:
-      ```bash
-      # Production API URL for the order-service
-      VUE_APP_ORDER_SERVICE_URL=https://api.production.com/order-service
+      # API URL for the order-service
+      VUE_APP_ORDER_SERVICE_URL=http://localhost:3000
 
-      # Production API URL for the product-service
-      VUE_APP_PRODUCT_SERVICE_URL=https://api.production.com/product-service
+      # API URL for the product-service
+      VUE_APP_PRODUCT_SERVICE_URL=http://localhost:3030
       ```
-   - To build the application for production, run:
-      ```bash
-      npm run build
-      ```
-   - Test your Vue.js application to ensure it is correctly using the environment variables in both development and production environments.
+
+      - `VUE_APP_ORDER_SERVICE_URL`: Replace this with the correct URL for your **order-service** (e.g., your deployed service URL in development).
+      - `VUE_APP_PRODUCT_SERVICE_URL`: Replace this with the correct URL for your **product-service** (e.g., your deployed service URL in development).
+      - In your Vue.js application code, use `process.env` to access these environment variables. For example:
+         ```javascript
+         const orderServiceUrl = process.env.VUE_APP_ORDER_SERVICE_URL;
+         const productServiceUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL;
+         ```
+      - Once the `.env` file is set up, run your development server to ensure it is correctly using the environment variables:
+         ```bash
+         npm run serve
+         ```
+      - To use environment variables in production, you can create a `.env.production` file with production-specific values, like this:
+         ```bash
+         # Production API URL for the order-service
+         VUE_APP_ORDER_SERVICE_URL=https://api.production.com/order-service
+
+         # Production API URL for the product-service
+         VUE_APP_PRODUCT_SERVICE_URL=https://api.production.com/product-service
+         ```
+      - To build the application for production, run:
+         ```bash
+         npm run build
+         ```
+      - Test your Vue.js application to ensure it is correctly using the environment variables in both development and production environments.
 ### Factor 4: Backing Services
 Treat backing services (like databases, message brokers) as attached resources.
 
-In this section, you will configure RabbitMQ as a backing service for your application by using a RabbitMQ instance hosted on an Azure VM. Instead of relying on RabbitMQ running on `localhost`, you will deploy RabbitMQ on an **Ubuntu 20.04 VM** from the Azure Marketplace and configure your application to connect to this external RabbitMQ instance.
+- In this section, you will configure RabbitMQ as a backing service for your application by using a RabbitMQ instance hosted on an Azure VM. Instead of relying on RabbitMQ running on `localhost`, you will deploy RabbitMQ on an **Ubuntu 20.04 VM** from the Azure Marketplace and configure your application to connect to this external RabbitMQ instance.
 
-You will use a pre-configured **RabbitMQ on Ubuntu 20.04 VM** from **Apps4Rent LLC** in the Azure Marketplace to set up RabbitMQ, then create a new username and password to establish a secure connection.
+- You will use a pre-configured **RabbitMQ on Ubuntu 20.04 VM** from **Apps4Rent LLC** in the Azure Marketplace to set up RabbitMQ, then create a new username and password to establish a secure connection.
 
 #### Steps to Set Up RabbitMQ on Azure VM
 
@@ -163,6 +163,7 @@ You will use a pre-configured **RabbitMQ on Ubuntu 20.04 VM** from **Apps4Rent L
    - Fill in the required details for your VM (e.g., resource group, VM name, region, size: B1s, etc.).
    - For **authentication type**, choose **SSH public key**. Ensure you remember the authentication details as you will use them to access the VM.
    - Once you have configured the VM settings, click **Review + Create** and then **Create** to deploy the VM.
+   - Ensure that **ports 5672** (used by RabbitMQ) and **15672** (used by the RabbitMQ Management UI) are open and accessible on the VM. You can do this by configuring the **network security group (NSG)** associated with your VM in the Azure portal.
 
 2. **Access the RabbitMQ VM**:
    - After the VM is deployed, go to your **Azure Portal** and navigate to your **Virtual Machines**.
